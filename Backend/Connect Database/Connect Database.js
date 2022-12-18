@@ -6,7 +6,7 @@ const connect_database = () => {
     return mongoose.connect(process.env.DB_URI).then(() => {
         console.log("Database Connected");
     }).catch((e) => {
-        console.log(e);
+        console.log(e.messsgae);
     })
 }
 
