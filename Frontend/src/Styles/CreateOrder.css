@@ -1,0 +1,72 @@
+header{
+    color: #1E2022;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.Table{ 
+    background:#FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #E0E0E0;
+    border-radius: 2px;
+    width: 100%; 
+    
+}
+
+td, th {
+    width: 22%;
+    font-size: 20px;
+    padding-left: 10px;
+    border-bottom: 1px solid rgb(101, 98, 98);
+  }
+.wash-type{
+    display: flex;
+    align-items: center;
+}
+
+#reset-btn button{
+    color: #5861AE;
+    border: 1px solid #5861AE;
+    border-radius: 5px;
+    width: 80px;
+    height: 32px; 
+}
+.wash-type img{
+    padding-right: 50px;
+    margin: 25px 20px 20px 0px;
+}
+
+.Table-main{
+    width: 100%;
+    margin: 30px;
+    
+}
+
+.thead tr{
+    background-color:#2F2F2F;
+    color: #dcd7d7;
+}
+
+#cancel-btn{
+    border: 1px solid #5861AE;
+    border-radius: 4px;
+    font: 14px;
+    color: #5861AE;
+    margin-right: 20px;
+    width: 107px;
+    height: 32px;
+}
+
+#bottom-btns{
+    display: flex;
+    margin-top: 25px;
+    margin-left: 85%;
+}
+#proceed-btn{
+    background: #5861AE;
+    border: 1px solid #5861AE;
+    border-radius: 4px;
+    font: 14px;
+    color: #FFFFFF;
+    width: 107px;
+    height: 32px;
+}
