@@ -12,11 +12,17 @@ function App() {
     <Layout>
       <BrowserRouter>
         <Routes>
+
+          <Route path='/' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/home' element={<Home />} />
+
           <Route path='/' element={<Home/>}/>
           <Route path='/Login' element={<Login/>}/>
           <Route path='/Signup' element={<Signup/>}/>
           <Route path='/Create' element={<Create/>}/>
           <Route path='/Createorder' element={<CreateOrder/>}/>
+
         </Routes>
       </BrowserRouter>
     </Layout>
