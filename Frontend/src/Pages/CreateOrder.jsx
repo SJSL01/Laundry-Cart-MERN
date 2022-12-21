@@ -5,6 +5,7 @@ import ToastContext from "../Context/ToastContext"
 import AuthContext from "../Context/AuthContext"
 import ConfirmModal from '../Components/ConfirmModal'
 import axios from 'axios'
+import Tracking from '../Components/Tracking'
 
 function CreateOrder() {
 
@@ -560,7 +561,7 @@ function CreateOrder() {
 
                 </div>
 
-
+                <Tracking />
 
                 <div className='order-details'>
                   <h4>
