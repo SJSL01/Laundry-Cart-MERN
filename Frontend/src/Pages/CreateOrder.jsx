@@ -5,7 +5,7 @@ import ToastContext from "../Context/ToastContext"
 import AuthContext from "../Context/AuthContext"
 import ConfirmModal from '../Components/ConfirmModal'
 import axios from 'axios'
-
+import Tracking from '../Components/Tracking'
 function CreateOrder() {
 
   const { toast } = useContext(ToastContext)
@@ -561,6 +561,10 @@ function CreateOrder() {
 
 
                   <div className='order-details'>
+                  {newOrder.price >0 &&<>
+                  <Tracking/>
+                  <hr/>
+                  </>}
                     <h4>
                       Order Details
                     </h4>
