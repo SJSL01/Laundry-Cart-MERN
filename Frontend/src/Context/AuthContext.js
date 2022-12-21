@@ -22,13 +22,11 @@ export const AuthContextProvider = ({ children }) => {
 
 
     const isLoggedIn = async () => {
+      
         try {
-
             const headers = { "Authorization": `Bearer ${sessionStorage.getItem("token")}` }
-
-            // const result = await axios.post("https://jsonplaolder.typicode.com/posts", null, { headers })
-
-            setUser("SJSL")
+            const res = await axios.post("http://localhost:3010/users/isLoggedIn", null, { headers })
+            setUser(res.data)
 
             if (location.pathname === "/" || location.pathname === "/signup") {
                 navigate("/home");
@@ -49,13 +47,16 @@ export const AuthContextProvider = ({ children }) => {
 
         try {
             console.log(UserDetails);
-            // const res = await axios.post("http://localhost/3010/user/login", UserDetails)
-            // setUser(res.data)
+            const res = await axios.post("http://localhost:3010/users/login", UserDetails)
+            setUser(res.data.user)
+            console.log(res);
+            toast.success(`Hello ${res.data.user.name}`)
+            sessionStorage.setItem("token",res.data.token)
             navigate("/home")
 
         } catch (error) {
             console.log(error);
-            navigate("/")
+            toast.error(error.response.data);
         }
     }
 
@@ -63,14 +64,13 @@ export const AuthContextProvider = ({ children }) => {
 
         try {
             console.log(UserDetails);
-            // const res = await axios.post("http://localhost/3010/user/signup", UserDetails)
-            // setUser(res.data)
+            const res = await axios.post("http://localhost:3010/users/signup", UserDetails)
+            console.log(res);
             toast.success("User Registered Successfully")
             navigate("/")
 
         } catch (error) {
-            console.log(error);
-            navigate("/")
+          toast.error(error.response.data);
         }
     }
 

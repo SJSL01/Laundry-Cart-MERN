@@ -1,13 +1,15 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Sidenav from '../Components/Sidenav'
 import '../Styles/Home.css'
+import ToastContext from "../Context/ToastContext";
 function Home() {
 
   const navigate = useNavigate()
-
   const [orders, setOrders] = useState([])
+
+  const { toast } = useContext(ToastContext)
 
   useEffect(() => {
     getOrders()
@@ -16,8 +18,22 @@ function Home() {
 
   const getOrders = async () => {
     try {
-      const res = await axios.get("http://localhost:3010/orders/")
+      const headers = { "Authorization": `Bearer ${sessionStorage.getItem("token")}` }
+      const res = await axios.post("http://localhost:3010/orders/getOrders", null, { headers })
+
       setOrders(res.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  const handleCancel = async (id) => {
+    try {
+      const headers = { "Authorization": `Bearer ${sessionStorage.getItem("token")}` }
+      const res = await axios.put(`http://localhost:3010/orders/cancel/${id}`,null,{headers})
+      getOrders()
+      toast.success(res.data)
     } catch (error) {
       console.log(error);
     }
@@ -41,97 +57,74 @@ function Home() {
         </div>
       </div>
 
-      {orders ?
+      {orders.length ?
         <div className='my-orders'>
-          <div className='order-headings'>
+          <div className='order-headings' style={{ position: "relative" }}>
             <div>
               Order id
             </div>
-            <div>
+            <div style={{ left: "10.5vw" }}>
               Order Date & Time
             </div>
-            <div>
+            <div style={{ left: "24vw" }}>
               Store Location
             </div>
-            <div>
+            <div style={{ left: "36vw" }}>
               City
             </div>
-            <div>
+            <div style={{ left: "45vw" }}>
               Store Phone
             </div>
-            <div>
+            <div style={{ left: "54.5vw" }}>
               Total Items
             </div>
-            <div>
+            <div style={{ left: "62vw" }}>
               Price
             </div>
-            <div>
+            <div style={{ left: "70vw" }}>
               Status
             </div>
-            <div>
+            <div style={{ left: "88vw" }}>
               View
             </div>
           </div>
 
-          <div className='order-info'>
-            <div>
-              Order id
-            </div>
-            <div>
-              Order Date & Time
-            </div>
-            <div>
-              Store Location
-            </div>
-            <div>
-              City
-            </div>
-            <div>
-              Store Phone
-            </div>
-            <div>
-              Total Items
-            </div>
-            <div>
-              Price
-            </div>
-            <div>
-              Status
-            </div>
-            <div>
-              View
-            </div>
-          </div>
-          <div className='order-info'>
-            <div>
-              Order id
-            </div>
-            <div>
-              Order Date & Time
-            </div>
-            <div>
-              Store Location
-            </div>
-            <div>
-              City
-            </div>
-            <div>
-              Store Phone
-            </div>
-            <div>
-              Total Items
-            </div>
-            <div>
-              Price
-            </div>
-            <div>
-              Status
-            </div>
-            <div>
-              View
-            </div>
-          </div>
-
+          {orders.map((order, key) => {
+            return (
+              <div className='order-info' key={key}>
+                <div style={{ fontWeight: "bold" }}>
+                  ORID000{key}
+                </div>
+                <div>
+                  {order.date_time}
+                </div>
+                <div style={{ marginLeft: "10px" }}>
+                  {order.store}
+                </div>
+                <div style={{ marginLeft: "10px" }}>
+                  {order.city}
+                </div>
+                <div>
+                  {order.phone}
+                </div>
+                <div>
+                  {order.total_items}
+                </div>
+                <div style={{color:"#5861AE",fontWeight:"bold"}}>
+                  {order.price} Rs
+                </div>
+                <div style={order.status === "Cancelled" ? { color: "red" } : {}}>
+                  {order.status}
+                </div>
+                {order.status === "Ready to Pickup" ? <span onClick={() => { handleCancel(order._id) }} style={{ cursor: "pointer", color: "red" }} >
+                  Cancel Order
+                </span> : <span style={{ color: "transparent" }}>Cancel Order</span>}
+                <div>
+                  <img style={{width:"20px"}} src={require("../Assets/view.png")} alt="" />
+                </div>
+              </div>
+            )
+          })}
         </div>
 
 
@@ -144,9 +137,10 @@ function Home() {
               <button id='button'>Create</button>
             </Link>
           </div>
-        </div>}
+        </div>
+      }
 
-    </div>
+    </div >
 
 
   )
