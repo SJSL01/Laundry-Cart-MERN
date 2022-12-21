@@ -1,7 +1,39 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
+import AuthContext from '../Context/AuthContext';
+import ToastContext from '../Context/ToastContext';
 import '../Styles/Login.css'
 export default function Login() {
+
+
+  const { toast } = useContext(ToastContext)
+  const { Login } = useContext(AuthContext)
+
+  const [userDetails, setUSerDetails] = useState({
+    email: "",
+    password: ""
+  })
+
+
+  const handleInput = (e) => {
+    const { name, value } = e.target
+    setUSerDetails({ ...userDetails, [name]: value })
+  }
+
+
+  const handleLogin = () => {
+    let emailREG = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+    let phoneREG = new RegExp(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/)
+
+    if (userDetails.email.match(emailREG) || userDetails.email.match(phoneREG)) {
+      console.log(userDetails);
+      Login(userDetails)
+    } else {
+      toast.error("Email or Phone Number Not Valid")
+    }
+    
+  }
+
   return (
     <div>
       <div className='cont'>
@@ -25,7 +57,7 @@ export default function Login() {
             </div>
             <div className='btn-tag'>
 
-              <button style={{ borderRadius: '3px', width: '110px',height:'40px',border:'1px solid #5861AE' }}><Link to={'/Signup'} style={{ textDecoration: 'none', color: ' #5861AE' }}>Register</Link></button>
+              <button style={{ borderRadius: '3px', width: '110px', height: '40px', border: '1px solid #5861AE' }}><Link to={'/Signup'} style={{ textDecoration: 'none', color: ' #5861AE' }}>Register</Link></button>
 
             </div>
           </div>
@@ -35,14 +67,21 @@ export default function Login() {
           <div className='Signin-div'>
             <div className='para-sign-in-div'>SIGN IN </div>
             <div className='text-div'>
-              <input type="text" placeholder='Email / Mobile' className='signin-input-class' />
+              <input type="text" placeholder='Email / Mobile'
+                name='email' className='signin-input-class'
+                onChange={handleInput} />
             </div>
             <div className='password-div'>
-              <input type="password" placeholder='Password' className='signin-input-class' />
-              <p className='forget-password-class' style={{color:'#4552C1'}}>Forget Password?</p>
+              <input type="password" placeholder='Password'
+                name='password' className='signin-input-class'
+                onChange={handleInput} />
+              <p className='forget-password-class' style={{ color: '#4552C1' }}>Forget Password?</p>
             </div>
             <div className='sign-in-btn-div'>
-              <button className='sign-in-btn' style={{ borderRadius: '3px', width: '90px',height:'40px' ,backgroundColor: ' #4552C1 ',border:'none' }}><Link to={'/Create'} style={{ textDecoration: 'none', color: 'white' }}>Sign in</Link></button>
+              <button className='sign-in-btn' onClick={() => { handleLogin() }}
+                style={{ borderRadius: '3px', width: '90px', height: '40px', backgroundColor: ' #4552C1 ', border: 'none', color: "white" }}>
+                Sign In
+              </button>
             </div>
           </div>
         </section>

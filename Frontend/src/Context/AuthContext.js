@@ -26,9 +26,9 @@ export const AuthContextProvider = ({ children }) => {
 
             const headers = { "Authorization": `Bearer ${sessionStorage.getItem("token")}` }
 
-            const result = await axios.post("http://localhost:3010/auth/isLoggedIn", null, { headers })
+            // const result = await axios.post("https://jsonplaolder.typicode.com/posts", null, { headers })
 
-            console.log(result);
+            setUser("SJSL")
 
             if (location.pathname === "/" || location.pathname === "/signup") {
                 navigate("/home");
@@ -45,10 +45,43 @@ export const AuthContextProvider = ({ children }) => {
     }
 
 
+    const Login = async (UserDetails) => {
+
+        try {
+            console.log(UserDetails);
+            // const res = await axios.post("http://localhost/3010/user/login", UserDetails)
+            // setUser(res.data)
+            navigate("/home")
+
+        } catch (error) {
+            console.log(error);
+            navigate("/")
+        }
+    }
+
+    const SignUp = async (UserDetails) => {
+
+        try {
+            console.log(UserDetails);
+            // const res = await axios.post("http://localhost/3010/user/signup", UserDetails)
+            // setUser(res.data)
+            toast.success("User Registered Successfully")
+            navigate("/")
+
+        } catch (error) {
+            console.log(error);
+            navigate("/")
+        }
+    }
+
+
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser, Login, SignUp }}>
             {children}
         </AuthContext.Provider>
     )
 }
+
+
+export default AuthContext;

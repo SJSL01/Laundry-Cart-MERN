@@ -1,14 +1,12 @@
 .Register-Home-Page,.Signin-Home-Page{
     width: 50%;
-    height: 90vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
 }
-/* .Signin-Home-Page{
 
-} */
 .Signin-Home-Page{
     background: #B9C0FD1A 0% 0% no-repeat padding-box;
     position: relative;

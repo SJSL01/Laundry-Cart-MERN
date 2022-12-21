@@ -1,26 +1,19 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
 import Footer2 from './Footer_2'
 import Navbar from './Navbar'
-
 import Footer from './Footer'
-
-import Sidenav from './Sidenav'
-
+import AuthContext from '../Context/AuthContext'
 
 export default function Layout({ children }) {
+    const { user } = useContext(AuthContext)
     return (
         <div>
-            <Navbar/>
-            <div style={{display:"flex"}}>
-            <Sidenav/>
-            {children}
-
-            <Footer/>
-
+            <Navbar user={user} />
+            <div>
+                {children}
             </div>
-            <Footer2/>
-
+            {!user && <Footer />}
+            <Footer2 />
         </div>
     )
 }

@@ -39,3 +39,7 @@ ul {
 .links li a {
     color: #808080;
 }
+
+.drop-style{
+    border: 0 !important;
+}
