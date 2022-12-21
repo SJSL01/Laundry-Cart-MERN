@@ -5,20 +5,19 @@ import ToastContext from "../Context/ToastContext"
 import AuthContext from "../Context/AuthContext"
 import ConfirmModal from '../Components/ConfirmModal'
 import axios from 'axios'
-
+import Tracking from '../Components/Tracking'
 function CreateOrder() {
 
   const { toast } = useContext(ToastContext)
   const { user } = useContext(AuthContext)
 
   const [newOrder, setNewOrder] = useState({
-    store: user?.district,
-    price: 0,
+    store: "",
+    price: "",
     date_time: "",
-    total_items: 0,
-    status: "Ready to Pickup",
+    total_items: "",
     city: user?.district,
-    phone: "+91 99 88 66 77 55"
+    phone: 8484848484
   })
 
   const saveOrder = async (total, quantity) => {
@@ -29,11 +28,9 @@ function CreateOrder() {
 
     console.log(newOrder);
     try {
-      const headers = { "Authorization": `Bearer ${sessionStorage.getItem("token")}` }
-      const res = await axios.post("http://localhost:3010/orders/create", [newOrder, orderDetails], { headers })
-      console.log(res);
+      const res = await axios.post("http://localhost:3010/orders/create", newOrder)
     } catch (error) {
-      console.log(error);
+
     }
   }
 
@@ -528,148 +525,153 @@ function CreateOrder() {
               date_time: new Date().toLocaleString(),
               total_items: Total_items
             })
-          }} type="button" id="proceed-btn" data-bs-toggle="modal" data-bs-target="#SummaryModal">
+          }}
+
+            type="button" id="proceed-btn" data-bs-toggle="modal" data-bs-target="#SummaryModal">
             Proceed
           </button>
-        </div>
 
-        <div className='modal fade come-from-modal right modal-xl' id='SummaryModal' tabIndex={-1} role="dialog" aria-labelledby='Summary'>
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div style={{ backgroundColor: " #5861AE", color: "white" }} className="modal-header">
-                <h4 className='modal-title' id='SummaryModal'>Summary</h4>
-                <button style={{ border: "0", backgroundColor: "transparent", color: "white", fontSize: "30px" }} data-bs-toggle="modal"
-                  data-bs-target="#SummaryModal" className='close' data-dismiss="modal">&times;</button>
-              </div>
-              <div className="modal-body">
-
-                <div className='store-info'>
-
-                  <div>
-                    <input type="text" value={newOrder.store}
-                      onChange={(e) => { setNewOrder({ ...newOrder, store: e.target.value }) }}
-                      placeholder='Store Location' style={{ position: "relative", top: "10px", border: "none", borderBottom: "1px solid gray", marginRight: "50px", backgroundColor: "#E0E0E0" }} />
-                    <span style={{ marginRight: "50px" }}>Store Address:</span>
-                    <span style={{ marginRight: "50px" }}>Phone:</span>
-                  </div>
-
-                  <div className='store-info2'>
-                    <div>Laundry,{user?.district}</div>
-                    <div>0000000000</div>
-                  </div>
-
+          <div className='modal fade come-from-modal right modal-xl' id='SummaryModal' tabIndex={-1} role="dialog" aria-labelledby='Summary'>
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div style={{ backgroundColor: " #5861AE", color: "white" }} className="modal-header">
+                  <h4 className='modal-title' id='SummaryModal'>Summary</h4>
+                  <button style={{ border: "0", backgroundColor: "transparent", color: "white", fontSize: "30px" }} data-bs-toggle="modal"
+                    data-bs-target="#SummaryModal" className='close' data-dismiss="modal">&times;</button>
                 </div>
+                <div className="modal-body">
 
+                  <div className='store-info'>
 
-
-                <div className='order-details'>
-                  <h4>
-                    Order Details
-                  </h4>
-
-                  {orderDetails.map((order) => {
-                    { Gtotal += order.total }
-                    { Total_items += Number(order.quantity) }
-                    { }
-                    return (
-                      <div>
-                        {order.total > 0 &&
-                          <div className='order'>
-
-                            <div className='product'>
-                              {order.ProductType}
-                            </div>
-
-                            <div className='services-selected'>
-                              {order.wash ? <i>washing,</i> : ""}
-                              {order.press ? <i>ironing,</i> : ""}
-                              {order.fold ? <i>packing,</i> : ""}
-                              {order.pack ? <i>chemical-wash</i> : ""}
-                            </div>
-
-                            <div className='total-breakdown'>
-                              {order.quantity}
-                              {" X "}
-                              {order.wash ? <i>20+</i> : ""}
-                              {order.press ? <i>15+</i> : ""}
-                              {order.fold ? <i>10+</i> : ""}
-                              {order.pack ? <i>25</i> : ""} =
-                            </div>
-                            <div style={{ fontSize: "20px", color: "#5861AE", fontWeight: "bold" }}>
-                              {order.total}
-                            </div>
-                          </div>
-                        }
-                      </div>
-                    )
-                  })}
-
-                  {Gtotal > 0 && <div className='total-footer'>
-                    <div className='sub-total' >
-                      <span style={{ marginRight: "170px" }}>
-                        Subtotal:
-                      </span>
-                      <span style={{ fontWeight: "bold", fontSize: "20px" }}>
-                        {Gtotal}
-                      </span>
-                    </div>
-                    <div className='pickup-charge' style={{ borderTop: "1px solid black" }}>
-                      <span style={{ marginRight: "150px" }}>
-                        Pickup Charge:
-                      </span>
-                      <span style={{ fontWeight: "bold", fontSize: "20px" }}>
-                        100
-                      </span>
-                    </div>
-                    <div className='G-total'>
-                      <span style={{ marginRight: "170px" }}>
-                        Total:
-                      </span>
-                      <span>
-                        {Gtotal + 100}
-                      </span>
-                    </div>
-                  </div>}
-
-                </div>
-
-
-                <div className='address'>
-                  <h4>Address</h4>
-                  <div className='tabs'>
                     <div>
-                      Assam,India
+                      <input type="text" value={newOrder.store}
+                        onChange={(e) => { setNewOrder({ ...newOrder, store: e.target.value }) }}
+                        placeholder='Store Location' style={{ position: "relative", top: "10px", border: "none", borderBottom: "1px solid gray", marginRight: "50px", backgroundColor: "#E0E0E0" }} />
+                      <span style={{ marginRight: "50px" }}>Store Address:</span>
+                      <span style={{ marginRight: "50px" }}>Phone:</span>
                     </div>
-                    <div>
-                      Vegas,USA
+
+                    <div className='store-info2'>
+                      <span>Address</span>
+                      <span>0000000000</span>
                     </div>
-                    <span style={{ fontWeight: "bold", color: "#5861AE" }}>
-                      ADD NEW</span>
+
                   </div>
-                </div>
 
 
-              </div>
-              <div className="modal-footer">
-                {newOrder.store && Gtotal ? <>
-                  <button data-bs-toggle="modal"
-                    data-bs-target="#SummaryModal" onClick={() => saveOrder()}
-                    className='close' id='proceed-btn' data-dismiss="modal">Confirm</button>
-                </> :
-                  <>
-                    <button onClick={() => { checkInput() }}
-                      id='disabled-btn'>Confirm</button>
+
+                  <div className='order-details'>
+                  {newOrder.price >0 &&<>
+                  <Tracking/>
+                  <hr/>
                   </>}
+                    <h4>
+                      Order Details
+                    </h4>
+
+                    {orderDetails.map((order) => {
+                      { Gtotal += order.total }
+                      { Total_items += order.quantity }
+                      return (
+                        <div>
+                          {order.total > 0 &&
+                            <div className='order'>
+
+                              <div className='product'>
+                                {order.ProductType}
+                              </div>
+
+                              <div className='services-selected'>
+                                {order.wash ? <i>washing,</i> : ""}
+                                {order.press ? <i>ironing,</i> : ""}
+                                {order.fold ? <i>packing,</i> : ""}
+                                {order.pack ? <i>chemical-wash</i> : ""}
+                              </div>
+
+                              <div className='total-breakdown'>
+                                {order.quantity}
+                                {" X "}
+                                {order.wash ? <i>20+</i> : ""}
+                                {order.press ? <i>15+</i> : ""}
+                                {order.fold ? <i>10+</i> : ""}
+                                {order.pack ? <i>25</i> : ""} =
+                              </div>
+                              <div style={{ fontSize: "20px", color: "#5861AE", fontWeight: "bold" }}>
+                                {order.total}
+                              </div>
+                            </div>
+                          }
+                        </div>
+                      )
+                    })}
+
+                    {Gtotal > 0 && <div className='total-footer'>
+                      <div className='sub-total' >
+                        <span style={{ marginRight: "170px" }}>
+                          Subtotal:
+                        </span>
+                        <span style={{ fontWeight: "bold", fontSize: "20px" }}>
+                          {Gtotal}
+                        </span>
+                      </div>
+                      <div className='pickup-charge' style={{ borderTop: "1px solid black" }}>
+                        <span style={{ marginRight: "150px" }}>
+                          Pickup Charge:
+                        </span>
+                        <span style={{ fontWeight: "bold", fontSize: "20px" }}>
+                          100
+                        </span>
+                      </div>
+                      <div className='G-total'>
+                        <span style={{ marginRight: "170px" }}>
+                          Total:
+                        </span>
+                        <span>
+                          {Gtotal + 100}
+                        </span>
+                      </div>
+                    </div>}
+
+                  </div>
+
+
+                  <div className='address'>
+                    <h4>Address</h4>
+                    <div className='tabs'>
+                      <div>
+                        Assam,India
+                      </div>
+                      <div>
+                        Vegas,USA
+                      </div>
+                      <span style={{ fontWeight: "bold", color: "#5861AE" }}>
+                        ADD NEW</span>
+                    </div>
+                  </div>
+
+
+                </div>
+                <div className="modal-footer">
+                  {newOrder.store && Gtotal ? <>
+                    <button data-bs-toggle="modal"
+                      data-bs-target="#SummaryModal" onClick={() => saveOrder()}
+                      className='close' id='proceed-btn' data-dismiss="modal">Confirm</button>
+                  </> :
+                    <>
+                      <button onClick={() => { checkInput() }}
+                        id='disabled-btn'>Confirm</button>
+                    </>}
+                </div>
               </div>
             </div>
           </div>
+
+          <ConfirmModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+          />
+
         </div>
-
-        <ConfirmModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
-
       </div>
     </div >
 
@@ -678,4 +680,3 @@ function CreateOrder() {
 }
 
 export default CreateOrder;
-
