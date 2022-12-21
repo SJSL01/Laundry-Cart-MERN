@@ -7,8 +7,8 @@ import AuthContext from '../Context/AuthContext';
 
 export default function Signup() {
 
-  const { toast } = useContext(ToastContext)
   const { SignUp } = useContext(AuthContext)
+  const { toast } = useContext(ToastContext)
 
   const [userDetails, setUSerDetails] = useState({
     name: "",
@@ -24,13 +24,39 @@ export default function Signup() {
 
   const handleInput = (e) => {
     const { name, value } = e.target
+
+    if (name == "phone" || name == "pincode") {
+      if (isNaN(value)) toast.error("Only Numbers Allowed");
+    }
     setUSerDetails({ ...userDetails, [name]: value })
   }
 
 
   const signup = (e) => {
     e.preventDefault()
-    SignUp(userDetails)
+    let emailREG = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+
+    if (!userDetails.email.match(emailREG)) {
+      return toast("Not a valid Email")
+    }
+    if (isNaN(userDetails.phone || userDetails.pincode)) {
+      return
+    }
+    if (userDetails.password.length<6) {
+      return toast.error("Password Length should be > 6")
+    }
+    if (userDetails.address.length &&
+      userDetails.name.length &&
+      userDetails.password.length &&
+      userDetails.district.length &&
+      userDetails.state.length &&
+      userDetails.pincode.length &&
+      userDetails.address.length &&
+      userDetails.phone) {
+      SignUp(userDetails)
+    } else {
+      return toast.error("All fields are required!!!")
+    }
     console.log(userDetails);
   }
 
@@ -68,12 +94,11 @@ export default function Signup() {
             <form >
               <div className='para-sign-in-div'>Register</div>
               <div className='text-div'>
-
                 <input type="text" placeholder='Name' required onChange={(e) => { handleInput(e) }} name='name' className='input-class' />
                 <input type="email" placeholder='Email' required onChange={(e) => { handleInput(e) }} name='email' className='email-class' />
               </div>
               <div className='password-div'>
-                <input type="Number" placeholder='Number' required onChange={(e) => { handleInput(e) }} name='phone' className='input-class' />
+                <input type="text" placeholder='Number' maxLength={10} required onChange={(e) => { handleInput(e) }} name='phone' className='input-class' />
                 <input type='text' placeholder='State' required onChange={(e) => { handleInput(e) }} name='state' className='email-class' />
               </div>
               <div className='password-div'>
@@ -81,7 +106,7 @@ export default function Signup() {
                 <input type='text' placeholder='Address' required onChange={(e) => { handleInput(e) }} name='address' className='email-class' />
               </div>
               <div className='password-div'>
-                <input type="Number" placeholder='Pincode' required onChange={(e) => { handleInput(e) }} name='pincode' className='input-class' />
+                <input type="text" placeholder='Pincode' maxLength={6} required onChange={(e) => { handleInput(e) }} name='pincode' className='input-class' />
                 <input type='Password' placeholder='Password' required onChange={(e) => { handleInput(e) }} name='password' className='email-class' />
               </div>
               <div className='checkbox-div'>
@@ -89,8 +114,10 @@ export default function Signup() {
                   required style={{ marginLeft: '100px', marginTop: '50px' }} /><span style={{ marginLeft: '10px', color: '#5861AE' }}>I agree to Terms & Conditions Receiving Marketing and Promotional Materials</span>
               </div>
               <div className='signup-in-btn-div'>
-                <button type='submit' disabled={userDetails.terms ? false : true} className='sign-in-btn' onClick={(e) => { signup(e) }}
-                  style={{ borderRadius: '3px', width: '90px', height: '40px', backgroundColor: ' #4552C1 ', border: 'none', color: 'white' }}>
+                <button type='submit' disabled={userDetails.terms ? false : true}
+                  onClick={(e) => { signup(e) }}
+                  style={userDetails.terms ? { borderRadius: '3px', width: '90px', height: '40px', backgroundColor: ' #4552C1 ', border: 'none', color: 'white' }
+                    : { borderRadius: '3px', width: '90px', height: '40px', backgroundColor: ' #bbc6e8 ', border: 'none', color: 'white' }}>
                   Register</button>
               </div>
             </form >

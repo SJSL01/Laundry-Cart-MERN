@@ -27,11 +27,15 @@ export default function Login() {
 
     if (userDetails.email.match(emailREG) || userDetails.email.match(phoneREG)) {
       console.log(userDetails);
-      Login(userDetails)
     } else {
-      toast.error("Email or Phone Number Not Valid")
+      return toast.error("Email or Phone Number Not Valid")
     }
     
+    if (userDetails.password.length < 6 || userDetails.password.length == 0) {
+      return toast.error("Password Length should be > 6")
+    }
+    Login(userDetails)
+
   }
 
   return (

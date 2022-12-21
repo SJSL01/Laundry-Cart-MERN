@@ -3,7 +3,7 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 const dotenv = require("dotenv")
-const connect_database = require("./Connect Database/")
+const connect_database = require("./Connect Database/Connect Database")
 
 // App Configs
 dotenv.config()
@@ -15,7 +15,8 @@ app.use(morgan("common"))
 
 // Routes
 
-
+app.use("/users", require("./Routes/User_Routes"))
+app.use("/orders", require("./Routes/Order_Routes"))
 
 
 ////
