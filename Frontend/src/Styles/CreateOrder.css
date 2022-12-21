@@ -63,9 +63,8 @@ tbody tr {
 }
 
 #bottom-btns {
-    display: flex;
-    margin-top: 25px;
-    margin-left: 85%;
+    margin-top: 20px;
+    float: right;
 }
 
 #proceed-btn {
@@ -125,13 +124,14 @@ tbody tr {
 }
 
 .store-info2 {
-    align-self: flex-end;
-    padding: 0px 20px;
+    margin-left: 15.5vw;
+    display: flex;
+    /* padding: 0px 20px; */
     background-color: #E0E0E0;
 }
 
-.store-info2 span {
-    margin-left: 100px;
+.store-info2 div:nth-child(even) {
+    margin-left: 20px;
 }
 
 input {
