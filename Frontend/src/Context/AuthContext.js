@@ -29,7 +29,7 @@ export const AuthContextProvider = ({ children }) => {
             setUser(res.data)
 
             if (location.pathname === "/" || location.pathname === "/signup") {
-                navigate("/home");
+                navigate("/home",{replace:true});
             } else {
                 navigate(location.pathname)
             }
@@ -37,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
 
         } catch (error) {
             navigate("/")
-            console.log(error);
+            //console.log(error);
             toast.error("Please Login First")
         }
     }
@@ -46,16 +46,16 @@ export const AuthContextProvider = ({ children }) => {
     const Login = async (UserDetails) => {
 
         try {
-            console.log(UserDetails);
+            //console.log(UserDetails);
             const res = await axios.post("https://laundry-cart-mern.onrender.com/users/login", UserDetails)
             setUser(res.data.user)
-            console.log(res);
+            //console.log(res);
             toast.success(`Hello ${res.data.user.name}`)
             sessionStorage.setItem("token",res.data.token)
-            navigate("/home")
+            navigate("/home",{replace:true})
 
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             toast.error(error.response.data);
         }
     }
@@ -63,11 +63,11 @@ export const AuthContextProvider = ({ children }) => {
     const SignUp = async (UserDetails) => {
 
         try {
-            console.log(UserDetails);
+            //console.log(UserDetails);
             const res = await axios.post("https://laundry-cart-mern.onrender.com/users/signup", UserDetails)
-            console.log(res);
+            //console.log(res);
             toast.success("User Registered Successfully")
-            navigate("/")
+            navigate("/",{replace:true})
 
         } catch (error) {
           toast.error(error.response.data);
