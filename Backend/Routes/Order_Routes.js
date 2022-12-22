@@ -6,7 +6,10 @@ router.post("/create", JWT_AUTH, async (req, res) => {
     try {
         console.log(req.body[0]);
         // console.log(res.user.id);
-        const { store, price, date_time, status, total_items, city, phone } = req.body[0]
+        const { store, date_time, status, total_items, city, phone } = req.body[0]
+        let { price } = req.body[0]
+        price = Number(price)
+        price += 100
         const newOrder = await Order({
             user: res.user.id,
             date_time, total_items, store, price, city, status, phone,
@@ -18,7 +21,7 @@ router.post("/create", JWT_AUTH, async (req, res) => {
     }
 })
 
-router.post("/getOrders", JWT_AUTH, async (req, res) => {
+router.post("/get-Orders", JWT_AUTH, async (req, res) => {
     try {
         // console.log(res.user.id);
         const { id } = res.user
