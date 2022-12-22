@@ -3,11 +3,12 @@ import '../Styles/Footer.css'
 import { FiInstagram } from 'react-icons/fi';
 import { BsFacebook } from 'react-icons/bs';
 import { AiFillLinkedin } from 'react-icons/ai'
+import circles from"../Assets/Footer.png"
 export default function Footer() {
     return (
         <div>
-            <footer>
-                <div className='Referal-div'>
+            <footer style={{ backgroundImage: `url(${circles})`,backgroundPositionY:"30px" }}>
+                <div className='Referal-div' style={{borderTop:"2px solid #5861AE"}}>
                     <h6 className='refer-para'>Now Refer & Earn 500 For every referal*</h6>
                     <h6 className='terms-condition-tag'>*Terms and conditions will be applied</h6>
                 </div>
@@ -22,7 +23,7 @@ export default function Footer() {
                         <p>Register</p>
                     </div>
                     <div className='pricing'>
-                        <h6>pricing</h6>
+                        <h6>Pricing</h6>
                     </div>
                     <div className='career-class'>
                         <h6>Career</h6>

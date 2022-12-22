@@ -22,7 +22,7 @@ export const ToastContextProvider = ({ children }) => {
 
                     // options for specific types
                     success: {
-                        duration: 1000,
+                        duration: 1500,
                         theme: {
                             primary: 'green',
                             secondary: 'black',

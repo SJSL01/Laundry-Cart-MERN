@@ -28,13 +28,13 @@ function CreateOrder() {
     setNewOrder({ ...newOrder, total_items: quantity })
     setNewOrder({ ...newOrder, date_time: new Date().toLocaleDateString })
 
-    console.log(newOrder);
+    //console.log(newOrder);
     try {
       const headers = { "Authorization": `Bearer ${sessionStorage.getItem("token")}` }
-      const res = await axios.post("http://localhost:3010/orders/create", [newOrder, orderDetails], { headers })
-      console.log(res);
+      const res = await axios.post("https://laundry-cart-mern.onrender.com/orders/create", [newOrder, orderDetails], { headers })
+      //console.log(res);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   }
 
@@ -123,22 +123,22 @@ function CreateOrder() {
   const handleInput = (e, index) => {
     const updatedOrders = [...orderDetails]
     updatedOrders[index].quantity = Number(e.target.value)
-    console.log(updatedOrders);
+    //console.log(updatedOrders);
     updatedOrders[index].total = 0
     if (updatedOrders[index].wash) {
-      console.log("wash");
+      //console.log("wash");
       updatedOrders[index].total += updatedOrders[index].quantity * 20
     }
     if (updatedOrders[index].press) {
-      console.log("press");
+      //console.log("press");
       updatedOrders[index].total += updatedOrders[index].quantity * 15
     }
     if (updatedOrders[index].fold) {
-      console.log("fold");
+      //console.log("fold");
       updatedOrders[index].total += updatedOrders[index].quantity * 10
     }
     if (updatedOrders[index].pack) {
-      console.log("pack");
+      //console.log("pack");
       updatedOrders[index].total += updatedOrders[index].quantity * 25
     }
     toast.success("quantity updated")
@@ -152,7 +152,7 @@ function CreateOrder() {
     let status;
 
 
-    console.log(index, service);
+    //console.log(index, service);
 
     if (service === 0) {
       status = updatedServices[index].wash
@@ -199,7 +199,7 @@ function CreateOrder() {
     }
 
     setOrderDetails(updatedServices)
-    console.log(orderDetails);
+    //console.log(orderDetails);
 
   }
 
@@ -218,7 +218,7 @@ function CreateOrder() {
       total: 0
     }
     setOrderDetails(restOrders)
-    console.log(orderDetails);
+    //console.log(orderDetails);
 
   }
 
@@ -654,7 +654,7 @@ function CreateOrder() {
               <div className="modal-footer">
                 {newOrder.store && Gtotal ? <>
                   <button data-bs-toggle="modal"
-                    data-bs-target="#SummaryModal" onClick={() => saveOrder()}
+                    data-bs-target="#SummaryModal" onClick={() => saveOrder(Gtotal)}
                     className='close' id='proceed-btn' data-dismiss="modal">Confirm</button>
                 </> :
                   <>

@@ -26,11 +26,11 @@ export default function Login() {
     let phoneREG = new RegExp(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/)
 
     if (userDetails.email.match(emailREG) || userDetails.email.match(phoneREG)) {
-      console.log(userDetails);
+      //console.log(userDetails);
     } else {
       return toast.error("Email or Phone Number Not Valid")
     }
-    
+
     if (userDetails.password.length < 6 || userDetails.password.length == 0) {
       return toast.error("Password Length should be > 6")
     }
@@ -66,8 +66,10 @@ export default function Login() {
             </div>
           </div>
         </section>
+        <div style={{ borderLeft: " 2px solid #5861AE",height:"150px",marginTop:"30vh" }}>
 
-        <section className='Signin-Home-Page'>
+        </div>
+        <section className='Signin-Home-Page' >
           <div className='Signin-div'>
             <div className='para-sign-in-div'>SIGN IN </div>
             <div className='text-div'>

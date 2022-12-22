@@ -14,7 +14,7 @@ export default function Navbar() {
 
     return (
 
-        <nav ref={scrollRef}>
+        <nav style={{width:"100vw"}} ref={scrollRef}>
             <ul className='logo'>
                 <li className='fs-4'>
                     <Link style={{ color: "#5861AE" }} to={"/home"}>LAUNDRY</Link>
@@ -26,10 +26,10 @@ export default function Navbar() {
                     Home
                 </li>}
                 <li>
-                    <Link to={"/Pricing"}>Pricing</Link>
+                    Pricing
                 </li>
                 <li>
-                    <Link to={"/career"}>Career</Link>
+                    Career
                 </li>
 
                 {!user ? <>
@@ -40,18 +40,18 @@ export default function Navbar() {
                     :
                     <li style={{ backgroundColor: "#5861AE" }}>
                         <div class="dropdown drop-style">
-                            <button class="btn btn-secondary dropdown-toggle" style={{ backgroundColor: "#5861AE", border: "0" }} data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn btn-secondary dropdown-toggle" style={{ backgroundColor: "#5861AE", border: "0" }} data-bs-toggle="dropdown" aria-expanded="false">
                                 {user?.name}
                             </button>
                             <div class="dropdown-menu">
                                 <li className='fs-5'>
-                                    <button class="dropdown-item"
+                                    <button className="dropdown-item"
                                         style={{ margin: "0 auto", textAlign: "center", backgroundColor: "red", borderRadius: "10px", color: "white" }}
                                         onClick={() => {
                                             setUser(null)
                                             sessionStorage.clear()
                                             navigate("/")
-                                            toast.success("Logout")
+                                            toast.success("Logged Out")
                                         }}>Logout</button>
                                 </li>
                             </div>

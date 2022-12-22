@@ -57,7 +57,7 @@ export default function Signup() {
     } else {
       return toast.error("All fields are required!!!")
     }
-    console.log(userDetails);
+    //console.log(userDetails);
   }
 
   return (
@@ -88,6 +88,10 @@ export default function Signup() {
             </div>
           </div>
         </section>
+
+        <div style={{ borderLeft: " 2px solid #5861AE",height:"150px",marginTop:"30vh" }}>
+
+        </div>
 
         <section className='Signup-Home-Page'>
           <div className='Signup-div'>

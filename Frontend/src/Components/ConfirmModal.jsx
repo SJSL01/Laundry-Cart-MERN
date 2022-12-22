@@ -21,7 +21,7 @@ export default function ConfirmModal(props) {
                         </div>
                         <p>Your Order is Successful</p>
                         <small>You can track the delivery in the "Orders" section.</small>
-                        <button onClick={() => { handleClose() }}>Go to Orders</button>
+                        <button style={{border:"0"}} onClick={() => { handleClose() }}>Go to Orders</button>
                     </div>
                 </div>
             </Modal.Body>
