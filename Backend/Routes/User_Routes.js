@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt")
 router.post("/isLoggedIn", JWT_AUTH, async (req, res) => {
     try {
         const user = await User.findOne({ _id: res.user.id })
-        // console.log(user);
+        // //console.log(user);
         return res.status(200).json(user)
     } catch (error) {
         res.status(500).json({ error: error.message })
@@ -40,7 +40,7 @@ router.post("/signup", async (req, res) => {
 
         res.json(newUser)
     } catch (error) {
-        console.log(error);
+        //console.log(error);
     }
 })
 
@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body
 
-        console.log(req.body);
+        //console.log(req.body);
         const getUserbyMail = await User.find({ email: email })
         const getUserbyPhone = await User.find({ phone: email })
 
@@ -58,12 +58,12 @@ router.post("/login", async (req, res) => {
         if (getUserbyMail.length || getUserbyPhone.length) {
             const hashedPassword = getUserbyMail.length ? getUserbyMail[0].password : getUserbyPhone[0].password
             const isPasswordCorrect = await bcrypt.compare(password, hashedPassword)
-            console.log(isPasswordCorrect);
+            //console.log(isPasswordCorrect);
             if (isPasswordCorrect) {
                 const user_id = getUserbyMail.length ? getUserbyMail[0]._id : getUserbyPhone[0]._id
                 const token = jwt.sign({ id: user_id }, process.env.JWT_SECRET)
                 res.status(200).json({ user, token })
-                console.log("here");
+                //console.log("here");
             } else {
                 res.status(400).json(`Invalid Password`)
             }
@@ -73,7 +73,7 @@ router.post("/login", async (req, res) => {
 
     } catch (error) {
         res.status(500).json("Server Error")
-        console.log(error);
+        //console.log(error);
     }
 })
 
