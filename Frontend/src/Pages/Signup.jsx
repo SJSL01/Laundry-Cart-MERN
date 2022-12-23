@@ -34,6 +34,18 @@ export default function Signup() {
 
   const signup = (e) => {
     e.preventDefault()
+    
+    let emailREG = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+
+    if (!userDetails.email.match(emailREG)) {
+      return toast.error("Not a valid Email")
+    }
+    if (isNaN(userDetails.phone || userDetails.pincode)) {
+      return
+    }
+    if (userDetails.password.length < 6) {
+      return toast.error("Password Length should be > 6")
+    }
     if (userDetails.address.length &&
       userDetails.name.length &&
       userDetails.password.length &&
@@ -45,17 +57,6 @@ export default function Signup() {
       SignUp(userDetails)
     } else {
       return toast.error("All fields are required!!!")
-    }
-    let emailREG = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-
-    if (!userDetails.email.match(emailREG)) {
-      return toast.error("Not a valid Email")
-    }
-    if (isNaN(userDetails.phone || userDetails.pincode)) {
-      return
-    }
-    if (userDetails.password.length < 6) {
-      return toast.error("Password Length should be > 6")
     }
     //console.log(userDetails);
   }
