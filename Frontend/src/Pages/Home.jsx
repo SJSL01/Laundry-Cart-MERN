@@ -6,8 +6,10 @@ import '../Styles/Home.css'
 import ToastContext from "../Context/ToastContext";
 import Tracking from '../Components/Tracking'
 import CancelModal from '../Components/CancelModal'
+import AuthContext from '../Context/AuthContext'
 function Home() {
 
+  const { user } = useContext(AuthContext)
   const navigate = useNavigate()
   const [orders, setOrders] = useState([])
 
@@ -37,6 +39,9 @@ function Home() {
   const { toast } = useContext(ToastContext)
 
   useEffect(() => {
+    if (!user) {
+      navigate("/", { replace: true })
+    }
     getOrders()
   }, [])
 
@@ -192,7 +197,7 @@ function Home() {
                   <div style={{ color: "#5861AE", fontWeight: "bold", left: "60vw", width: "100px", textAlign: "center" }}>
                     {order.price} Rs
                   </div>
-                  <div style={order.status === "Cancelled" ? { color: "red", left: "69.5vw" } : { left: "69.5vw" }}>
+                  <div style={order.status === "Cancelled" ? { color: "red", left: "69.5vw", fontWeight: "bold" } : { left: "69.5vw" }}>
                     {order.status}
                   </div>
                   {order.status === "Ready to Pickup" ? <div style={{ cursor: "pointer", color: "red", left: "80vw" }} >
@@ -248,7 +253,7 @@ function Home() {
                 </div>
 
                 <div className='store-info2'>
-                  <div>Laundry,{orders[0]?.Store}</div>
+                  <div style={{ position: "absolute", left: "130px" }}>Laundry,{orders[0]?.store}</div>
                   <div>0000000000</div>
                 </div>
 
