@@ -34,17 +34,6 @@ export default function Signup() {
 
   const signup = (e) => {
     e.preventDefault()
-    let emailREG = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
-
-    if (!userDetails.email.match(emailREG)) {
-      return toast("Not a valid Email")
-    }
-    if (isNaN(userDetails.phone || userDetails.pincode)) {
-      return
-    }
-    if (userDetails.password.length<6) {
-      return toast.error("Password Length should be > 6")
-    }
     if (userDetails.address.length &&
       userDetails.name.length &&
       userDetails.password.length &&
@@ -56,6 +45,17 @@ export default function Signup() {
       SignUp(userDetails)
     } else {
       return toast.error("All fields are required!!!")
+    }
+    let emailREG = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+
+    if (!userDetails.email.match(emailREG)) {
+      return toast.error("Not a valid Email")
+    }
+    if (isNaN(userDetails.phone || userDetails.pincode)) {
+      return
+    }
+    if (userDetails.password.length < 6) {
+      return toast.error("Password Length should be > 6")
     }
     //console.log(userDetails);
   }
@@ -89,7 +89,7 @@ export default function Signup() {
           </div>
         </section>
 
-        <div style={{ borderLeft: " 2px solid #5861AE",height:"150px",marginTop:"30vh" }}>
+        <div style={{ borderLeft: " 2px solid #5861AE", height: "150px", marginTop: "30vh" }}>
 
         </div>
 
@@ -102,7 +102,7 @@ export default function Signup() {
                 <input type="email" placeholder='Email' required onChange={(e) => { handleInput(e) }} name='email' className='email-class' />
               </div>
               <div className='password-div'>
-                <input type="text" placeholder='Number' maxLength={10} required onChange={(e) => { handleInput(e) }} name='phone' className='input-class' />
+                <input type="text" placeholder='Phone Number' maxLength={10} required onChange={(e) => { handleInput(e) }} name='phone' className='input-class' />
                 <input type='text' placeholder='State' required onChange={(e) => { handleInput(e) }} name='state' className='email-class' />
               </div>
               <div className='password-div'>

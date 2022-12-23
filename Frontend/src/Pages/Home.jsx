@@ -59,6 +59,7 @@ function Home() {
 
 
   const handleCancel = async (id) => {
+    setCancelid([id,idx])
     if (orders[cancelid[1]].status === "Cancelled") {
       return toast.error(`ORDID000${cancelid[1]} is already cancelled`)
     }
@@ -66,9 +67,9 @@ function Home() {
       const headers = { "Authorization": `Bearer ${sessionStorage.getItem("token")}` }
       const res = await axios.put(`https://laundry-cart-mern.onrender.com/orders/cancel/${id}`, null, { headers })
       getOrders()
-      toast.success(res.data)
       setCancelid()
       setFiltered([])
+      toast.success(res.data)
     } catch (error) {
       //console.log(error);
     }
@@ -164,7 +165,7 @@ function Home() {
                   <div style={order.status === "Cancelled" ? { color: "red", left: "69.5vw" } : { left: "69.5vw" }}>
                     {order.status}
                   </div>
-                  {order.status === "Ready to Pickup" ? <div onClick={() => { handleCancel(order._id, key) }} style={{ cursor: "pointer", color: "red", left: "80vw" }} >
+                  {order.status === "Ready to Pickup" ? <div onClick={() => { handleCancel(order._id, key) }} style={{ cursor: "pointer", fontWeight: "bold", color: "red", left: "80vw" }} >
                     Cancel Order
                   </div> : <></>}
                   <div style={{ left: "88.5vw" }}>
