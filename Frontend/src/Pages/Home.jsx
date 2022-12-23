@@ -59,7 +59,7 @@ function Home() {
 
 
   const handleCancel = async (id) => {
-    setCancelid([id,idx])
+    setCancelid([id, idx])
     if (orders[cancelid[1]].status === "Cancelled") {
       return toast.error(`ORDID000${cancelid[1]} is already cancelled`)
     }
@@ -98,7 +98,8 @@ function Home() {
           </div>
           <div>
             <img src={require("../Assets/search.png")} alt="search" />
-            <input type="number" onChange={(e) => { handleSearch(e.target.value) }} className='search' />
+            <input type="number" title="Enter the number after ORDID000"
+             placeholder='ORDID000' onChange={(e) => { handleSearch(e.target.value) }} className='search' />
           </div>
         </div>
 
@@ -162,11 +163,16 @@ function Home() {
                   <div style={{ color: "#5861AE", fontWeight: "bold", left: "60vw", width: "100px", textAlign: "center" }}>
                     {order.price} Rs
                   </div>
-                  <div style={order.status === "Cancelled" ? { color: "red", left: "69.5vw" } : { left: "69.5vw" }}>
+                  <div style={order.status === "Cancelled" ? { color: "red", left: "69.5vw",fontWeight:"bold" } : { left: "69.5vw" }}>
                     {order.status}
                   </div>
                   {order.status === "Ready to Pickup" ? <div onClick={() => { handleCancel(order._id, key) }} style={{ cursor: "pointer", fontWeight: "bold", color: "red", left: "80vw" }} >
-                    Cancel Order
+                    <button style={{ border: "0", color: "red", backgroundColor: "transparent", fontWeight: "bold" }} onClick={() => {
+                      setmodalShow(true)
+                      setCancelid([order._id, key])
+                    }}>
+                      Cancel Order
+                    </button>
                   </div> : <></>}
                   <div style={{ left: "88.5vw" }}>
                     <img onClick={() => { handleModal(idx) }} style={{ width: "20px" }} src={require("../Assets/view.png")} alt="view" data-bs-toggle="modal" data-bs-target="#SummaryModal" />
@@ -208,7 +214,7 @@ function Home() {
                     }}>
                       Cancel Order
                     </button>
-                  </div> : <span style={{ color: "transparent", left: "75vw" }}>Cancel Order</span>}
+                  </div> : <></>}
                   <div style={{ left: "88.5vw" }}>
                     <img onClick={() => { handleModal(key) }}
                       style={{ width: "20px" }} src={require("../Assets/view.png")}

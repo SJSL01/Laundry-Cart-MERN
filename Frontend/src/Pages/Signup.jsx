@@ -26,20 +26,24 @@ export default function Signup() {
     const { name, value } = e.target
 
     if (name == "phone" || name == "pincode") {
-      if (isNaN(value)) toast.error("Only Numbers Allowed");
+      if (isNaN(value))  toast.error("Only Numbers Allowed");
     }
     setUSerDetails({ ...userDetails, [name]: value })
   }
 
-
-  const signup = (e) => {
-    e.preventDefault()
-    
+  const checkEmail = () => {
     let emailREG = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
 
     if (!userDetails.email.match(emailREG)) {
       return toast.error("Not a valid Email")
     }
+  }
+
+
+  const signup = (e) => {
+    e.preventDefault()
+
+
     if (isNaN(userDetails.phone || userDetails.pincode)) {
       return
     }
@@ -100,7 +104,7 @@ export default function Signup() {
               <div className='para-sign-in-div'>Register</div>
               <div className='text-div'>
                 <input type="text" placeholder='Name' required onChange={(e) => { handleInput(e) }} name='name' className='input-class' />
-                <input type="email" placeholder='Email' required onChange={(e) => { handleInput(e) }} name='email' className='email-class' />
+                <input type="email" placeholder='Email' required onBlur={checkEmail} onChange={(e) => { handleInput(e) }} name='email' className='email-class' />
               </div>
               <div className='password-div'>
                 <input type="text" placeholder='Phone Number' maxLength={10} required onChange={(e) => { handleInput(e) }} name='phone' className='input-class' />

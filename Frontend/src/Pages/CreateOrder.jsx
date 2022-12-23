@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Sidenav from '../Components/Sidenav'
 import '../Styles/CreateOrder.css'
 import ToastContext from "../Context/ToastContext"
@@ -13,12 +13,12 @@ function CreateOrder() {
   const { toast } = useContext(ToastContext)
   const { user } = useContext(AuthContext)
   const navigate = useNavigate()
-  
-  useEffect(()=>{
-    if(!user){
-      navigate("/",{replace:true})
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/", { replace: true })
     }
-  },[])
+  }, [])
 
   const [newOrder, setNewOrder] = useState({
     store: user?.district,
@@ -128,13 +128,82 @@ function CreateOrder() {
     }
   ])
 
+  const handleCancelReset = () => {
+    setOrderDetails([
+      {
+        ProductType: "Shirt",
+        quantity: "",
+        wash: false,
+        press: false,
+        fold: false,
+        pack: false,
+        total: 0
+      },
+      {
+        ProductType: "T-Shirts",
+        quantity: "",
+        wash: false,
+        press: false,
+        fold: false,
+        pack: false,
+        total: 0
+      },
+      {
+        ProductType: "Trousers",
+        quantity: "",
+        wash: false,
+        press: false,
+        fold: false,
+        pack: false,
+        total: 0
+      },
+      {
+        ProductType: "Jeans",
+        quantity: "",
+        wash: false,
+        press: false,
+        fold: false,
+        pack: false,
+        total: 0
+      },
+      {
+        ProductType: "Boxers",
+        quantity: "",
+        wash: false,
+        press: false,
+        fold: false,
+        pack: false,
+        total: 0
+      },
+      {
+        ProductType: "Joggers",
+        quantity: "",
+        wash: false,
+        press: false,
+        fold: false,
+        pack: false,
+        total: 0
+      },
+      {
+        ProductType: "Others",
+        quantity: "",
+        wash: false,
+        press: false,
+        fold: false,
+        pack: false,
+        total: 0
+      }
+    ])
+    toast.success("Order Cancelled")
+
+  }
 
   const handleInput = (e, index) => {
     const numberRegex = new RegExp(/^[0-9]*$/)
-    if(!e.target.value.match(numberRegex)){
+    if (!e.target.value.match(numberRegex)) {
       return toast.error("Only Numbers")
     }
-    if(e.target.value<0){
+    if (e.target.value < 0) {
       return toast.error("Negative Quantity Not Allowed")
     }
     const updatedOrders = [...orderDetails]
@@ -157,8 +226,12 @@ function CreateOrder() {
       //console.log("pack");
       updatedOrders[index].total += updatedOrders[index].quantity * 25
     }
-    toast.success("quantity updated")
     setOrderDetails(updatedOrders)
+  }
+  
+  
+  const quantityUpdated = ()=>{
+    toast.success("quantity updated")
   }
 
 
@@ -267,7 +340,7 @@ function CreateOrder() {
           <tbody>
             <tr>
               <td><img style={{ height: '50px', marginRight: "15px" }} src={require("../Assets/cloth.png")} alt="washing" />Shirts</td>
-              <td><input min={1} placeholder={0} onChange={(e) => { handleInput(e, 0) }}
+              <td><input min={1} placeholder={0} onBlur={quantityUpdated} onChange={(e) => { handleInput(e, 0) }}
                 value={orderDetails[0].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
               <td className='wash-type'>
 
@@ -308,7 +381,7 @@ function CreateOrder() {
 
             <tr>
               <td><img style={{ height: '50px', marginRight: "15px" }} src={require("../Assets/tshirt.png")} alt="washing" />T Shirts</td>
-              <td><input min={1} placeholder={0} onChange={(e) => { handleInput(e, 1) }} value={orderDetails[1].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
+              <td><input min={1} placeholder={0} onBlur={quantityUpdated} onChange={(e) => { handleInput(e, 1) }} value={orderDetails[1].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
               <td className='wash-type'>
 
                 <div onClick={() => { toggleServices(1, 0) }}><img src={orderDetails[1].wash ?
@@ -348,7 +421,7 @@ function CreateOrder() {
 
             <tr>
               <td><img style={{ height: '50px', marginRight: "15px" }} src={require("../Assets/trousers.png")} alt="washing" />Trousers</td>
-              <td><input min={1} placeholder={0} onChange={(e) => { handleInput(e, 2) }} value={orderDetails[2].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
+              <td><input min={1} placeholder={0} onBlur={quantityUpdated} onChange={(e) => { handleInput(e, 2) }} value={orderDetails[2].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
               <td className='wash-type'>
 
                 <div onClick={() => { toggleServices(2, 0) }}><img src={orderDetails[2].wash ?
@@ -388,7 +461,7 @@ function CreateOrder() {
 
             <tr>
               <td><img style={{ height: '50px', marginRight: "15px" }} src={require("../Assets/jeans.png")} alt="washing" />Jeans</td>
-              <td><input min={1} placeholder={0} onChange={(e) => { handleInput(e, 3) }} value={orderDetails[3].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
+              <td><input min={1} placeholder={0} onBlur={quantityUpdated} onChange={(e) => { handleInput(e, 3) }} value={orderDetails[3].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
               <td className='wash-type'>
                 <div onClick={() => { toggleServices(3, 0) }}><img src={orderDetails[3].wash ?
                   require("../Assets/washing-machineSelected.png") :
@@ -426,7 +499,7 @@ function CreateOrder() {
 
             <tr>
               <td> <img style={{ height: '50px', marginRight: "15px" }} src={require("../Assets/boxers.png")} alt="washing" />Boxers</td>
-              <td><input min={1} placeholder={0} onChange={(e) => { handleInput(e, 4) }} value={orderDetails[4].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
+              <td><input min={1} placeholder={0} onBlur={quantityUpdated} onChange={(e) => { handleInput(e, 4) }} value={orderDetails[4].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
               <td className='wash-type'>
                 <div onClick={() => { toggleServices(4, 0) }}><img src={orderDetails[4].wash ?
                   require("../Assets/washing-machineSelected.png") :
@@ -464,7 +537,7 @@ function CreateOrder() {
 
             <tr>
               <td> <img style={{ height: '50px', marginRight: "15px" }} src={require("../Assets/pants.png")} alt="washing" />Joggers</td>
-              <td><input min={1} placeholder={0} onChange={(e) => { handleInput(e, 5) }} value={orderDetails[5].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
+              <td><input min={1} placeholder={0} onBlur={quantityUpdated} onChange={(e) => { handleInput(e, 5) }} value={orderDetails[5].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
               <td className='wash-type'>
                 <div onClick={() => { toggleServices(5, 0) }}><img src={orderDetails[5].wash ?
                   require("../Assets/washing-machineSelected.png") :
@@ -500,7 +573,7 @@ function CreateOrder() {
             </tr>
             <tr>
               <td><img style={{ height: '50px', marginRight: "15px" }} src={require("../Assets/others.png")} alt="washing" />Others</td>
-              <td><input min={1} placeholder={0} onChange={(e) => { handleInput(e, 6) }} value={orderDetails[6].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
+              <td><input min={1} placeholder={0} onBlur={quantityUpdated} onChange={(e) => { handleInput(e, 6) }} value={orderDetails[6].quantity} type={"text"} style={{ width: '80px', textAlign: "center" }}></input></td>
               <td className='wash-type'>
                 <div onClick={() => { toggleServices(6, 0) }}><img src={orderDetails[6].wash ?
                   require("../Assets/washing-machineSelected.png") :
@@ -537,7 +610,9 @@ function CreateOrder() {
           </tbody>
         </table>
         <div id='bottom-btns'>
-          <button id='cancel-btn'>Cancel</button>
+          <button id='cancel-btn' onClick={() => {
+            handleCancelReset()
+          }}>Cancel</button>
 
           <button onClick={() => {
             setNewOrder({
@@ -551,7 +626,7 @@ function CreateOrder() {
         </div>
 
         <div className='modal fade come-from-modal right modal-xl' id='SummaryModal' tabIndex={-1} role="dialog" aria-labelledby='Summary'>
-          <div className="modal-dialog" role="document">
+          <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div style={{ backgroundColor: " #5861AE", color: "white" }} className="modal-header">
                 <h4 className='modal-title' id='SummaryModal'>Summary</h4>
