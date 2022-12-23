@@ -1,13 +1,20 @@
-import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../Context/AuthContext';
 import ToastContext from '../Context/ToastContext';
 import '../Styles/Login.css'
 export default function Login() {
 
+  const navigate = useNavigate()
 
+  useEffect(()=>{
+    if(user){
+      console.log("hello");
+      navigate("/home",{replace:true})
+    }
+  },[])
   const { toast } = useContext(ToastContext)
-  const { Login } = useContext(AuthContext)
+  const { Login,user } = useContext(AuthContext)
 
   const [userDetails, setUSerDetails] = useState({
     email: "",
@@ -66,7 +73,7 @@ export default function Login() {
             </div>
           </div>
         </section>
-        <div style={{ borderLeft: " 2px solid #5861AE",height:"150px",marginTop:"30vh" }}>
+        <div style={{ borderLeft: " 2px solid #5861AE", height: "150px", marginTop: "30vh" }}>
 
         </div>
         <section className='Signin-Home-Page' >
