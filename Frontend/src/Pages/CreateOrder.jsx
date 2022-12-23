@@ -11,6 +11,12 @@ function CreateOrder() {
 
   const { toast } = useContext(ToastContext)
   const { user } = useContext(AuthContext)
+  
+  useEffect(()=>{
+    if(!user){
+      navigate("/",{replace:true})
+    }
+  },[])
 
   const [newOrder, setNewOrder] = useState({
     store: user?.district,
