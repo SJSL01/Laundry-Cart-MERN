@@ -1,14 +1,23 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import '../Styles/Signup.css'
+import { useNavigate } from 'react-router-dom';
 import ToastContext from '../Context/ToastContext';
 import AuthContext from '../Context/AuthContext';
 
 
 export default function Signup() {
 
-  const { SignUp } = useContext(AuthContext)
+  const { SignUp,user } = useContext(AuthContext)
   const { toast } = useContext(ToastContext)
+  
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(user){
+      navigate("/home",{replace:true})
+    }
+  },[])
 
   const [userDetails, setUSerDetails] = useState({
     name: "",
